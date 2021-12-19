@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_1/scr/router/routing_const.dart';
+import 'package:flutter_application_1/scr/screens/register/register_screen.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -66,10 +68,14 @@ class AuthScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold
                         ),
                       ),
-                onPressed: (){}
+                onPressed: (){
+                  Navigator.pushNamed(
+                    context,
+                    RegisterRoute);
+                    },
+                  ),
               ),
-            ),
-          ],
+            ],
         ),
       ),
     );
