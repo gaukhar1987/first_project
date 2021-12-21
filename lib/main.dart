@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/router/router.dart';
 import 'package:flutter_application_1/scr/screens/auth/auth_screen.dart';
+import 'package:flutter_application_1/scr/screens/ribbon.dart';
 /*import 'package:flutter_application_1/scr/screens/register/register_screen.dart';*/
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return CupertinoApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: AppRouter.generateRoute,
-      home: AuthScreen (),
+      home: RibbonScreen (),
       theme: CupertinoThemeData(scaffoldBackgroundColor: AppColors.scaffoldBackground),
     );
   }
