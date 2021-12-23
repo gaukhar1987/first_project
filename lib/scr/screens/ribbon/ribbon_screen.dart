@@ -24,22 +24,10 @@ class _RibbonScreenState extends State<RibbonScreen> {
  ];
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+     return CupertinoPageScaffold(
       backgroundColor: Color(0xFFE5E5E5),
-      body: 
+      child:
       ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-        
-        itemBuilder: (BuildContext context, int index) { 
-           return GestureDetector(
-             child: Container(
-               color: Color(0xFFE5E5E5),
-               height: 20,
-            ),
-          );   
-        },      
-        itemCount: 4,
-        scrollDirection: Axis.vertical,
         separatorBuilder: (BuildContext context, int index)
           { return Column(
             children: [
@@ -62,7 +50,17 @@ class _RibbonScreenState extends State<RibbonScreen> {
               ) 
             ],
           );
-        }
+        },
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        itemBuilder: (BuildContext context, int index) {
+           return GestureDetector(
+             child: Container(
+               color: Color(0xFFE5E5E5),
+               height: 20,
+            ),
+          );   
+        },      
+        itemCount: 4,
       ),
     );
   }

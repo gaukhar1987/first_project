@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/common/constants/padding_constants.dart';
 import 'package:flutter_application_1/scr/router/routing_const.dart';
+import 'package:flutter_application_1/scr/screens/MainScreen.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -46,8 +47,17 @@ class AuthScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold
                         ),
                       ), 
-                onPressed: (){}
-               ),
+                onPressed: (){
+                  Navigator.push(
+                    context, 
+                    CupertinoPageRoute(
+                       builder: (context) {
+                          return MainScreen();
+                      },
+                    ),
+                  );
+               },
+            ),
             ),
 
             SizedBox(height: 19),

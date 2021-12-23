@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/scr/screens/auth/auth_screen.dart';
 import 'package:flutter_application_1/scr/screens/register/register_screen.dart';
+import 'package:flutter_application_1/scr/screens/ribbon/ribbon_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen ({Key? key}) : super (key: key);
@@ -13,6 +14,7 @@ class MainScreen extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.home)),
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.gift)),
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.person)),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.book)),
         ],
       ), 
       tabBuilder: (context, index) {
@@ -24,7 +26,7 @@ class MainScreen extends StatelessWidget {
               case 1:
                 return RegisterSreen();
               case 2:
-                return AuthScreen();
+                return RibbonScreen();
               case 3:
                 return RegisterSreen();
               default:
