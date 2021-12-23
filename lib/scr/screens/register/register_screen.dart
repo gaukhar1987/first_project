@@ -8,7 +8,6 @@ class RegisterSreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      /*backgroundColor: Color(0xFFE5E5E5),*/
       navigationBar: CupertinoNavigationBar(
         backgroundColor: CupertinoColors.white,
         border: Border(),

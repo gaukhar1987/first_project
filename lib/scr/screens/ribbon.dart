@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RibbonScreen extends StatefulWidget {
@@ -6,52 +7,63 @@ class RibbonScreen extends StatefulWidget {
 }
 
 class _RibbonScreenState extends State<RibbonScreen> {
-  List<Image> myimages = [
-    Image.asset("assets/images/Esentail_Mall.png"),
-    Image.asset("assets/images/Mega_Center.png"),
+  List<String> myimages = [
+    './assets/images/Esentail.png',
+    './assets/images/Mega.png',
+    './assets/images/Dostyk.png',
    ];
   List<String> text = [
    'Esentail Mall',
    'Mega Center',
+   'Dostyk Center',
  ];
    List<String> text2 = [
    'ул. Аль-Фараби',
    'ул. Розыбакиева',
+   'ул. Абая',
  ];
   @override
   Widget build(BuildContext context) {
      return Scaffold(
-       
+      backgroundColor: Color(0xFFE5E5E5),
       body: 
-       ListView.separated(
+      ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        
         itemBuilder: (BuildContext context, int index) { 
-           return ListTile(
-            leading: ConstrainedBox(
-              constraints:
-                BoxConstraints(maxWidth: 150, maxHeight: 343),
-                child: Image.asset("assets/images/Esentail_Mall.png"),
+           return GestureDetector(
+             child: Container(
+               color: Color(0xFFE5E5E5),
+               height: 20,
             ),
-            title: Text(text [index], style:  TextStyle (fontWeight: FontWeight.bold,fontSize: 16)),
-            subtitle: Column(
-              children: <Widget>[
-                Row(children: <Widget>[
-                  Text('Один из крупнейших торговых центров в ...', style:  TextStyle (fontWeight: FontWeight.normal,fontSize: 13)),
-                ]
-                ),
-                Row(children: <Widget>[
-                  Text(text2 [index], style:  TextStyle (fontWeight: FontWeight.normal,fontSize: 13)),
-                ]
-                )
-              ]
-            )
+          );   
+        },      
+        itemCount: 4,
+        scrollDirection: Axis.vertical,
+        separatorBuilder: (BuildContext context, int index)
+          { return Column(
+            children: [
+              Image.asset(myimages[index],),
+              SizedBox(height: 11,),
+              Row(
+                children: <Widget>[
+                  Text(text[index], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Text('Один из крупнейших торговых центров в ...', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 13),),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Text(text2[index], style: TextStyle(fontWeight: FontWeight.normal, fontSize: 13),),
+                ],
+              ) 
+            ],
           );
-        },
-         separatorBuilder: (BuildContext context, int index)
-        {
-          return Divider(height: 20);
-        }, 
-        itemCount: 2,
-      )
+        }
+      ),
     );
   }
 }
