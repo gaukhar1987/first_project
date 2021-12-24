@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/scr/screens/auth/auth_screen.dart';
+import 'package:flutter_application_1/scr/screens/profile/profile_screen.dart';
 import 'package:flutter_application_1/scr/screens/register/register_screen.dart';
 import 'package:flutter_application_1/scr/screens/ribbon/ribbon_screen.dart';
 
@@ -28,7 +29,7 @@ class MainScreen extends StatelessWidget {
               case 2:
                 return RibbonScreen();
               case 3:
-                return RegisterSreen();
+                return ProfileScreen();
               default:
                 return RegisterSreen();                
             }

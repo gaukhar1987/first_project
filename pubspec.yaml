@@ -49,6 +49,7 @@ flutter:
     - assets/images/Esentail.png
     - assets/images/Mega.png
     - assets/images/Dostyk.png
+    - assets/images/profile_foto.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
