@@ -1,6 +1,6 @@
 const String MainRoute = '/';
 
-const String AuthRoute = '/auth/login';
+const String AuthRoute = '/auth';
 const String RegisterRoute = '/register';
 
 const String HomeRoute = '/restaurants';

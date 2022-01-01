@@ -7,7 +7,7 @@ class RibbonScreen extends StatefulWidget {
 }
 
 class _RibbonScreenState extends State<RibbonScreen> {
-  List<String> myimages = [
+  List<String> myImages = [
     './assets/images/Esentail.png',
     './assets/images/Mega.png',
     './assets/images/Dostyk.png',
@@ -16,12 +16,12 @@ class _RibbonScreenState extends State<RibbonScreen> {
    'Esentail Mall',
    'Mega Center',
    'Dostyk Center',
- ];
+  ];
    List<String> text2 = [
    'ул. Аль-Фараби',
    'ул. Розыбакиева',
    'ул. Абая',
- ];
+  ];
   @override
   Widget build(BuildContext context) {
      return CupertinoPageScaffold(
@@ -29,38 +29,26 @@ class _RibbonScreenState extends State<RibbonScreen> {
       child:
       ListView.separated(
         separatorBuilder: (BuildContext context, int index)
-          { return Column(
-            children: [
-              Image.asset(myimages[index],),
-              SizedBox(height: 11,),
-              Row(
-                children: <Widget>[
-                  Text(text[index], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Text('Один из крупнейших торговых центров в ...', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 13),),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Text(text2[index], style: TextStyle(fontWeight: FontWeight.normal, fontSize: 13),),
-                ],
-              ) 
-            ],
-          );
-        },
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-        itemBuilder: (BuildContext context, int index) {
-           return GestureDetector(
+          { return GestureDetector(
              child: Container(
                color: Color(0xFFE5E5E5),
                height: 20,
             ),
-          );   
+          ); 
+        },
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        itemBuilder: (BuildContext context, int index) {
+           return Column(
+            children: [
+              Image.asset(myImages[index],),
+              SizedBox(height: 11,),
+              Text(text[index], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+              Text('Один из крупнейших торговых центров в ...', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 13),),
+              Text(text2[index], style: TextStyle(fontWeight: FontWeight.normal, fontSize: 13),),
+            ],
+          );
         },      
-        itemCount: 4,
+        itemCount: myImages.length,
       ),
     );
   }

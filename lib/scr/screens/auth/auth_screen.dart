@@ -20,7 +20,9 @@ class AuthScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CustomTextField(),
+            CustomTextField(
+              placholder: ('Введите'),
+            ),
 
             Container (
               height: 1,
@@ -28,12 +30,8 @@ class AuthScreen extends StatelessWidget {
               margin: AppPadding.horizontal,
             ),
 
-            CupertinoTextField(
-              placeholder: 'Пароль',
-              decoration: BoxDecoration (
-                color: CupertinoColors.white,
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 16),
+            CustomTextField(
+              placholder: ('Пароль'),
             ),
             SizedBox(height: 32),
 
@@ -48,16 +46,11 @@ class AuthScreen extends StatelessWidget {
                         ),
                       ), 
                 onPressed: (){
-                  Navigator.push(
+                  Navigator.pushNamed(
                     context, 
-                    CupertinoPageRoute(
-                       builder: (context) {
-                          return MainScreen();
-                      },
-                    ),
-                  );
-               },
-            ),
+                    MainRoute);
+                },
+              ),
             ),
 
             SizedBox(height: 19),
