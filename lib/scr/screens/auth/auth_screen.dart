@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/common/constants/padding_constants.dart';
 import 'package:flutter_application_1/scr/router/routing_const.dart';
-import 'package:flutter_application_1/scr/screens/MainScreen.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -21,7 +20,7 @@ class AuthScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             CustomTextField(
-              placholder: ('Введите'),
+              placeholder: ('Введите'),
             ),
 
             Container (
@@ -31,7 +30,7 @@ class AuthScreen extends StatelessWidget {
             ),
 
             CustomTextField(
-              placholder: ('Пароль'),
+              placeholder: ('Пароль'),
             ),
             SizedBox(height: 32),
 
@@ -82,15 +81,15 @@ class AuthScreen extends StatelessWidget {
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
-    this.placholder = 'Введите',
+    this.placeholder = 'Введите',
   }) : super(key: key);
 
-  final String placholder;
+  final String placeholder;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
-      placeholder: placholder,
+      placeholder: placeholder,
       decoration: BoxDecoration (
         color: CupertinoColors.white,
       ),
