@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/scr/router/routing_const.dart';
+import 'package:flutter_application_1/scr/screens/MainScreen.dart';
 import 'package:flutter_application_1/scr/screens/auth/auth_screen.dart';
 import 'package:flutter_application_1/scr/screens/register/register_screen.dart';
+import 'package:flutter_application_1/scr/screens/ribbon/ribbon_screen.dart';
 
 class AppRouter {
   static Route generateRoute (RouteSettings routeSettings){
@@ -13,6 +15,14 @@ class AppRouter {
       case RegisterRoute:
         return CupertinoPageRoute (
           builder: (context) => RegisterSreen(),
+        );
+      case HomeRoute:
+        return CupertinoPageRoute (
+          builder: (context) => RibbonScreen(),
+        );
+      case MainRoute:
+        return CupertinoPageRoute (
+          builder: (context) => MainScreen(),
         );
       default:
         return CupertinoPageRoute (

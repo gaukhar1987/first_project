@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/common/constants/padding_constants.dart';
 import 'package:flutter_application_1/scr/router/routing_const.dart';
-import 'package:flutter_application_1/scr/screens/MainScreen.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -20,7 +19,9 @@ class AuthScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CustomTextField(),
+            CustomTextField(
+              placeholder: ('Введите'),
+            ),
 
             Container (
               height: 1,
@@ -28,12 +29,8 @@ class AuthScreen extends StatelessWidget {
               margin: AppPadding.horizontal,
             ),
 
-            CupertinoTextField(
-              placeholder: 'Пароль',
-              decoration: BoxDecoration (
-                color: CupertinoColors.white,
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 16),
+            CustomTextField(
+              placeholder: ('Пароль'),
             ),
             SizedBox(height: 32),
 
@@ -48,16 +45,11 @@ class AuthScreen extends StatelessWidget {
                         ),
                       ), 
                 onPressed: (){
-                  Navigator.push(
+                  Navigator.pushNamed(
                     context, 
-                    CupertinoPageRoute(
-                       builder: (context) {
-                          return MainScreen();
-                      },
-                    ),
-                  );
-               },
-            ),
+                    MainRoute);
+                },
+              ),
             ),
 
             SizedBox(height: 19),
@@ -89,15 +81,15 @@ class AuthScreen extends StatelessWidget {
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
-    this.placholder = 'Введите',
+    this.placeholder = 'Введите',
   }) : super(key: key);
 
-  final String placholder;
+  final String placeholder;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
-      placeholder: placholder,
+      placeholder: placeholder,
       decoration: BoxDecoration (
         color: CupertinoColors.white,
       ),

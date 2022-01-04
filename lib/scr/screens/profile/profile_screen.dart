@@ -15,12 +15,12 @@ class ProfileScreen extends StatelessWidget
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 500, vertical: 38)),
+            SizedBox(height: 38, width: 500,),
             Image.asset('./assets/images/profile_foto.png', height: 64, width: 64,),
             Text('Марипбек Чингиз', style: TextStyle( fontSize: 24, fontWeight: FontWeight.bold)),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 12)),
+            SizedBox(height: 12,),
             Text('maripbekoff@gmail.com', style: TextStyle( fontSize: 16, fontWeight: FontWeight.normal)),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 500, vertical: 27)),
+            SizedBox(height: 27,),
             TextButton(
               onPressed:  () {},
               child: Text("Выйти", style: TextStyle(color: Colors.red, fontSize: 16)),),

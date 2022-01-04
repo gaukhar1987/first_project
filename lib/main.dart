@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/router/router.dart';
+import 'package:flutter_application_1/scr/router/routing_const.dart';
 import 'package:flutter_application_1/scr/screens/auth/auth_screen.dart';
-import 'package:flutter_application_1/scr/screens/profile/profile_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
     return CupertinoApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: AppRouter.generateRoute,
-      home: AuthScreen(),
-      theme: CupertinoThemeData(scaffoldBackgroundColor: AppColors.scaffoldBackground),
+      initialRoute: AuthRoute,
+     theme: CupertinoThemeData(scaffoldBackgroundColor: AppColors.scaffoldBackground),
     );
   }
 }
