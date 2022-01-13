@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
+import 'package:flutter_application_1/scr/common/constants/padding_constants.dart';
 
 class RegisterSreen extends StatelessWidget {
   const RegisterSreen({Key? key}) : super(key: key);
@@ -6,7 +8,6 @@ class RegisterSreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      backgroundColor: Color(0xFFE5E5E5),
       navigationBar: CupertinoNavigationBar(
         backgroundColor: CupertinoColors.white,
         border: Border(),
@@ -28,7 +29,7 @@ class RegisterSreen extends StatelessWidget {
             Container(
               height: 1,
               color: Color(0xFFE0E6ED),
-              margin: const EdgeInsets.symmetric(horizontal: 16),
+              margin: AppPadding.horizontal,
             ),
             CupertinoTextField(
               placeholder: 'Телефон',
@@ -40,7 +41,7 @@ class RegisterSreen extends StatelessWidget {
             Container(
               height: 1,
               color: Color(0xFFE0E6ED),
-              margin: const EdgeInsets.symmetric(horizontal: 16),
+              margin: AppPadding.horizontal,
             ),
             CupertinoTextField(
               placeholder: 'Почта',
@@ -52,7 +53,7 @@ class RegisterSreen extends StatelessWidget {
             Container(
               height: 1,
               color: Color(0xFFE0E6ED),
-              margin: const EdgeInsets.symmetric(horizontal: 16),
+              margin: AppPadding.horizontal,
             ),
             CupertinoTextField(
               placeholder: 'Пароль',
@@ -63,9 +64,9 @@ class RegisterSreen extends StatelessWidget {
             ),
             Container(height: 220,),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal:16),
+              padding: AppPadding.horizontal,
               child: CupertinoButton(
-              color: Color(0xFF4631D2),
+              color: AppColors.main,
               child: Text('Создать аккаунт',
                     style: TextStyle(fontWeight: FontWeight.normal),
                     ),
