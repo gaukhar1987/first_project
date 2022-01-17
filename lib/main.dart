@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/router/router.dart';
 import 'package:flutter_application_1/scr/router/routing_const.dart';
-import 'package:flutter_application_1/scr/screens/auth/auth_screen.dart';
+
 
 void main() {
   runApp(MyApp());

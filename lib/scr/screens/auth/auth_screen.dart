@@ -1,10 +1,19 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/common/constants/padding_constants.dart';
 import 'package:flutter_application_1/scr/router/routing_const.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
+
+  @override
+  _AuthScreenState createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+
+  Dio dio = Dio();
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +48,16 @@ class AuthScreen extends StatelessWidget {
               child: CupertinoButton(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 color: AppColors.main,
-                child: Text('Войти',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold
-                        ),
-                      ), 
-                onPressed: (){
-                  Navigator.pushNamed(
-                    context, 
-                    MainRoute);
+                child: Text('Войти', style: TextStyle(fontWeight: FontWeight.bold),), 
+                onPressed: () async {
+                  Response response = await dio.post(
+                    'http://api.codeunion.kz/api/v1/auth/login',
+                    data: {
+                      'email': 'maripbekoff@gmail.com',
+                      'password': 'adminadmin'
+                    },
+                  );
+                  print(response.data);
                 },
               ),
             ),
