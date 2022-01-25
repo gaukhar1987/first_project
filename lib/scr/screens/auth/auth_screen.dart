@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/common/constants/padding_constants.dart';
 import 'package:flutter_application_1/scr/router/routing_const.dart';
+import 'package:hive_flutter/adapters.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -60,21 +61,22 @@ class _AuthScreenState extends State<AuthScreen> {
                 color: AppColors.main,
                 child: Text('Войти', style: TextStyle(fontWeight: FontWeight.bold),), 
                 onPressed: () async {
+                  Dio dio = Dio();
+                  Box tokensBox = Hive.box('tokens');
 
-                  print(emailController.text);
-
-                  try {
+                  try { 
                   Response response = await dio.post(
                     'http://api.codeunion.kz/api/v1/auth/login',
-                      data: {
-                      'email': 'maripbekoff@gmail3.com',
-                      'password': 'adminadmin'
-                    },
-                  );
+                    data: {
+                    'email': 'maripbekoff@gmail.com',
+                    'password': 'adminadmin'}                  );
+                  tokensBox.put('access', response.data['tokens']['accessToken']);
+                  tokensBox.put('refresh', response.data['tokens']['refreshToken']);
 
-                  print(response.data['tokens']['accessToken']);
+                  print(tokensBox.get('access'));
+                  print(tokensBox.get('refresh'));
                   Navigator.pushReplacementNamed(context, MainRoute);
-                  }
+                  }                  
                   on DioError catch (e) {
                     print(e.response!.data);
                     showCupertinoModalPopup(
@@ -92,7 +94,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         );
                       },
                     );
-                    throw e;
+                    throw e;                    
                   }
                 },
               ),
