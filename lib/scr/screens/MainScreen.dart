@@ -9,33 +9,38 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.home)),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.gift)),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.person)),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.book)),
-        ],
-      ), 
-      tabBuilder: (context, index) {
-        return CupertinoTabView(
-          builder: (context){
-            switch (index) {
-              case 0:
-                return AuthScreen();
-              case 1:
-                return RegisterSreen();
-              case 2:
-                return RibbonScreen();
-              case 3:
-                return ProfileScreen();
-              default:
-                return RegisterSreen();                
-            }
-          },
-        );
-      }
+    return WillPopScope(
+        onWillPop: () {
+          return Future.value(false);
+        },
+        child: CupertinoTabScaffold(
+        tabBar: CupertinoTabBar(
+          items: [
+            BottomNavigationBarItem(icon: Icon(CupertinoIcons.home)),
+            BottomNavigationBarItem(icon: Icon(CupertinoIcons.gift)),
+            BottomNavigationBarItem(icon: Icon(CupertinoIcons.person)),
+            BottomNavigationBarItem(icon: Icon(CupertinoIcons.book)),
+          ],
+        ), 
+        tabBuilder: (context, index) {
+          return CupertinoTabView(
+            builder: (context){
+              switch (index) {
+                case 0:
+                  return AuthScreen();
+                case 1:
+                  return RegisterSreen();
+                case 2:
+                  return RibbonScreen();
+                case 3:
+                  return ProfileScreen();
+                default:
+                  return RegisterSreen();                
+              }
+            },
+          );
+        }
+      )
     );
   } 
 }
