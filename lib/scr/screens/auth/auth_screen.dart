@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/common/constants/padding_constants.dart';
+import 'package:flutter_application_1/scr/common/models/tokens_model.dart';
 import 'package:flutter_application_1/scr/router/routing_const.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -46,7 +47,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   CustomTextField(
                     controller: passwordController,
                     placeholder: 'Пароль',
-                  ),                
+                  ),
                 ],
               ),
                   margin: AppPadding.horizontal,
@@ -61,7 +62,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 color: AppColors.main,
                 child: Text('Войти', style: TextStyle(fontWeight: FontWeight.bold),), 
                 onPressed: () async {
-                  Dio dio = Dio();
+                  
                   Box tokensBox = Hive.box('tokens');
 
                   try { 
@@ -71,12 +72,17 @@ class _AuthScreenState extends State<AuthScreen> {
                     'email': emailController.text,
                     'password': passwordController.text});
                     
-                  tokensBox.put('access', response.data['tokens']['accessToken']);
-                  tokensBox.put('refresh', response.data['tokens']['refreshToken']);
+                    TokensModel tokensModel = TokensModel.fromJson(
+                      response.data['tokens'],
+                    );
 
-                  print(tokensBox.get('access'));
-                  print(tokensBox.get('refresh'));
-                  Navigator.pushReplacementNamed(context, MainRoute);
+                    print(tokensModel.access);
+                    print(tokensModel.refresh);
+
+                    tokensBox.put('access', tokensModel.access);
+                    tokensBox.put('refresh', tokensModel.refresh);
+
+                    Navigator.pushReplacementNamed(context, MainRoute);
                   }                  
                   on DioError catch (e) {
                     print(e.response!.data);
@@ -136,13 +142,14 @@ class CustomTextField extends StatelessWidget {
   }) : super(key: key);
 
   final String placeholder;
-    final Widget? suffix;
+  final Widget? suffix;
   // Создаём поле controller
   final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
+      controller: controller,
       placeholder: placeholder,
       decoration: BoxDecoration (
         color: CupertinoColors.white,
