@@ -5,7 +5,9 @@ import 'package:flutter_application_1/scr/common/constants/color_constants.dart'
 import 'package:flutter_application_1/scr/common/constants/padding_constants.dart';
 import 'package:flutter_application_1/scr/common/models/tokens_model.dart';
 import 'package:flutter_application_1/scr/router/routing_const.dart';
+import 'package:flutter_application_1/scr/screens/auth/bloc/log_in_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -61,48 +63,13 @@ class _AuthScreenState extends State<AuthScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 color: AppColors.main,
                 child: Text('Войти', style: TextStyle(fontWeight: FontWeight.bold),), 
-                onPressed: () async {
-                  
-                  Box tokensBox = Hive.box('tokens');
-
-                  try { 
-                  Response response = await dio.post(
-                    'http://api.codeunion.kz/api/v1/auth/login',
-                    data: {
-                    'email': emailController.text,
-                    'password': passwordController.text});
-                    
-                    TokensModel tokensModel = TokensModel.fromJson(
-                      response.data['tokens'],
-                    );
-
-                    print(tokensModel.access);
-                    print(tokensModel.refresh);
-
-                    tokensBox.put('access', tokensModel.access);
-                    tokensBox.put('refresh', tokensModel.refresh);
-
-                    Navigator.pushReplacementNamed(context, MainRoute);
-                  }                  
-                  on DioError catch (e) {
-                    print(e.response!.data);
-                    showCupertinoModalPopup(
-                      context: context,
-                      builder: (context) {
-                        return CupertinoAlertDialog(
-                          title: Text('Ошибка'),
-                          content: Text('Неправильный логин или пароль!'),
-                          actions: [
-                            CupertinoButton(
-                              child: Text('ОК'),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                    throw e;                    
-                  }
+                onPressed: ()  {
+                  context.read<LogInBloc>().add(
+                        LogInPressed(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        ),
+                      );
                 },
               ),
             ),
