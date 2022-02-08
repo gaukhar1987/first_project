@@ -55,25 +55,46 @@ class _AuthScreenState extends State<AuthScreen> {
                   margin: AppPadding.horizontal,
             ),
 
-            SizedBox(height: 32),
-
-            Padding(
-              padding: AppPadding.horizontal,
-              child: CupertinoButton(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                color: AppColors.main,
-                child: Text('Войти', style: TextStyle(fontWeight: FontWeight.bold),), 
-                onPressed: ()  {
-                  context.read<LogInBloc>().add(
+            SizedBox(height: 32), 
+            BlocConsumer<LogInBloc, LogInState>(
+              listener: (context, state) {
+                if (state is LogInLoading) {
+                  Navigator.pushReplacementNamed(context, MainRoute);
+                } else if (state is LogInFailed) {
+                  showCupertinoModalPopup(
+                    context: context,
+                    builder: (context) {
+                      return CupertinoAlertDialog(
+                        title: Text('Ошибка'),
+                        content: Text(state.message ?? ''),
+                        actions: [
+                          CupertinoButton(
+                            child: Text('ОК'),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+                builder: (context, state) {
+                  return CupertinoButton(
+                    child: Text('Войти', style: TextStyle(fontWeight: FontWeight.bold),), 
+                    onPressed: state is LogInLoading
+                    ? null
+                    :() {
+                      context.read<LogInBloc>().add(
                         LogInPressed(
                           email: emailController.text,
                           password: passwordController.text,
                         ),
                       );
+                    },
+                  );
                 },
               ),
-            ),
-
+              
             SizedBox(height: 19),
 
             Padding (
