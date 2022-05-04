@@ -1,10 +1,33 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/common/constants/padding_constants.dart';
+import 'package:flutter_application_1/scr/router/routing_const.dart';
+import 'package:flutter_application_1/scr/screens/auth/auth_screen.dart';
+import 'package:flutter_application_1/scr/screens/register/bloc/regis_bloc.dart';
+import 'package:provider/src/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegisterSreen extends StatelessWidget {
+
+class RegisterSreen extends StatefulWidget {
   const RegisterSreen({Key? key}) : super(key: key);
 
+  @override
+  State<RegisterSreen> createState() => _RegisterSreenState();
+}
+
+class _RegisterSreenState extends State<RegisterSreen> {
+
+    Dio dio = Dio();
+
+  final TextEditingController nicknameController = TextEditingController();
+
+  final TextEditingController phoneController = TextEditingController();
+
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -19,60 +42,73 @@ class RegisterSreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
             SizedBox(height: 32,),
-            CupertinoTextField(
+
+            CustomTextField(
               placeholder: 'Логин',
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-              decoration: BoxDecoration (
-                color: CupertinoColors.white,
-              ),
+              controller: nicknameController,
             ),
-            Container(
-              height: 1,
-              color: Color(0xFFE0E6ED),
-              margin: AppPadding.horizontal,
-            ),
-            CupertinoTextField(
+
+            CustomTextField(
               placeholder: 'Телефон',
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 19),
-              decoration: BoxDecoration(
-                color: CupertinoColors.white,
-              ),
+              controller: phoneController,
             ),
-            Container(
-              height: 1,
-              color: Color(0xFFE0E6ED),
-              margin: AppPadding.horizontal,
-            ),
-            CupertinoTextField(
+
+            CustomTextField(
               placeholder: 'Почта',
-              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 19),
-              decoration: BoxDecoration(
-                color: CupertinoColors.white,
-              ),
+              controller: emailController,
             ),
-            Container(
-              height: 1,
-              color: Color(0xFFE0E6ED),
-              margin: AppPadding.horizontal,
+
+            CustomTextField(
+              placeholder: 'Пароль2',
+              controller: passwordController,
             ),
-            CupertinoTextField(
-              placeholder: 'Пароль',
-              padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 19),
-              decoration: BoxDecoration(
-                color: CupertinoColors.white,
-              ),
-            ),
+          
             Container(height: 220,),
-            Padding(
-              padding: AppPadding.horizontal,
-              child: CupertinoButton(
-              color: AppColors.main,
-              child: Text('Создать аккаунт',
+
+              BlocConsumer<RegisBloc, RegisState>(
+                listener: (context, state) {
+                      if (state is Regisloaded) {
+                        Navigator.pushReplacementNamed(context, AuthRoute);
+                      } else if (state is RegisFailed) {
+                        showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) {
+                            return CupertinoAlertDialog(
+                              title: Text('Ошибка'),
+                              content: Text(state.message ?? ''),
+                              actions: [
+                                CupertinoButton(
+                                  child: Text('ОК'),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                },
+            
+                builder: (context, state) {
+                    return CupertinoButton(
+                    color: AppColors.main,
+                    child: Text('Создать аккаунт',
                     style: TextStyle(fontWeight: FontWeight.normal),
                     ),
-            onPressed: () {}
-            ),
-            ),
+                    onPressed: state is RegisLoading
+                    ? null
+                    :() {
+                      context.read<RegisBloc>().add(
+                        RegisPressed(
+                          email: emailController.text, 
+                          nickname: nicknameController.text, 
+                          phone: phoneController.text, 
+                          password: passwordController.text
+                            ),
+                          );
+                        },
+                 );
+               },
+              )
           ],
         ),
       ), 
