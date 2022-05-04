@@ -59,7 +59,7 @@ class _RegisterSreenState extends State<RegisterSreen> {
             ),
 
             CustomTextField(
-              placeholder: 'Пароль2',
+              placeholder: 'Пароль',
               controller: passwordController,
             ),
           
