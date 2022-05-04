@@ -3,8 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/scr/common/constants/color_constants.dart';
 import 'package:flutter_application_1/scr/common/constants/padding_constants.dart';
+import 'package:flutter_application_1/scr/common/models/tokens_model.dart';
 import 'package:flutter_application_1/scr/router/routing_const.dart';
+import 'package:flutter_application_1/scr/screens/auth/bloc/log_in_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -46,61 +49,52 @@ class _AuthScreenState extends State<AuthScreen> {
                   CustomTextField(
                     controller: passwordController,
                     placeholder: 'Пароль',
-                  ),                
+                  ),
                 ],
               ),
                   margin: AppPadding.horizontal,
             ),
 
-            SizedBox(height: 32),
-
-            Padding(
-              padding: AppPadding.horizontal,
-              child: CupertinoButton(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                color: AppColors.main,
-                child: Text('Войти', style: TextStyle(fontWeight: FontWeight.bold),), 
-                onPressed: () async {
-                  Dio dio = Dio();
-                  Box tokensBox = Hive.box('tokens');
-
-                  try { 
-                  Response response = await dio.post(
-                    'http://api.codeunion.kz/api/v1/auth/login',
-                    data: {
-                    'email': emailController.text,
-                    'password': passwordController.text});
-                    
-                  tokensBox.put('access', response.data['tokens']['accessToken']);
-                  tokensBox.put('refresh', response.data['tokens']['refreshToken']);
-
-                  print(tokensBox.get('access'));
-                  print(tokensBox.get('refresh'));
+            SizedBox(height: 32), 
+            BlocConsumer<LogInBloc, LogInState>(
+              listener: (context, state) {
+                if (state is LogInLoading) {
                   Navigator.pushReplacementNamed(context, MainRoute);
-                  }                  
-                  on DioError catch (e) {
-                    print(e.response!.data);
-                    showCupertinoModalPopup(
-                      context: context,
-                      builder: (context) {
-                        return CupertinoAlertDialog(
-                          title: Text('Ошибка'),
-                          content: Text('Неправильный логин или пароль!'),
-                          actions: [
-                            CupertinoButton(
-                              child: Text('ОК'),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                    throw e;                    
-                  }
+                } else if (state is LogInFailed) {
+                  showCupertinoModalPopup(
+                    context: context,
+                    builder: (context) {
+                      return CupertinoAlertDialog(
+                        title: Text('Ошибка'),
+                        content: Text(state.message ?? ''),
+                        actions: [
+                          CupertinoButton(
+                            child: Text('ОК'),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+                builder: (context, state) {
+                  return CupertinoButton(
+                    child: Text('Войти', style: TextStyle(fontWeight: FontWeight.bold),), 
+                    onPressed: state is LogInLoading
+                    ? null
+                    :() {
+                      context.read<LogInBloc>().add(
+                        LogInPressed(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
-            ),
-
+              
             SizedBox(height: 19),
 
             Padding (
@@ -136,13 +130,14 @@ class CustomTextField extends StatelessWidget {
   }) : super(key: key);
 
   final String placeholder;
-    final Widget? suffix;
+  final Widget? suffix;
   // Создаём поле controller
   final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
+      controller: controller,
       placeholder: placeholder,
       decoration: BoxDecoration (
         color: CupertinoColors.white,
